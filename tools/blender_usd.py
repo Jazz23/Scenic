@@ -17,17 +17,17 @@ def import_usd_safe(filepath):
     """Try multiple import commands depending on Blender version."""
     print(f"Attempting to import: {filepath}")
     
-    # Method 1: Modern Blender (4.0+)
-    if hasattr(bpy.ops.wm, "usd_import"):
-        print("Using: bpy.ops.wm.usd_import")
-        bpy.ops.wm.usd_import(filepath=filepath)
-        return
+    # # Method 1: Modern Blender (4.0+)
+    # if hasattr(bpy.ops.wm, "usd_import"):
+    #     print("Using: bpy.ops.wm.usd_import")
+    #     bpy.ops.wm.usd_import(filepath=filepath)
+    #     return
 
-    # Method 2: Older Blender (3.x)
-    if hasattr(bpy.ops.import_scene, "usd"):
-        print("Using: bpy.ops.import_scene.usd")
-        bpy.ops.import_scene.usd(filepath=filepath)
-        return
+    # # Method 2: Older Blender (3.x)
+    # if hasattr(bpy.ops.import_scene, "usd"):
+    #     print("Using: bpy.ops.import_scene.usd")
+    bpy.ops.import_scene.usd(filepath=filepath)
+    return
 
     # Fail state
     print("ERROR: No USD import operator found.")
