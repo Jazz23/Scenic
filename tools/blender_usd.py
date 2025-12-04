@@ -1,100 +1,99 @@
 import bpy
-import json
 import os
 import sys
-import math
-from mathutils import Vector
+import addon_utils
 
-# ------------------------------------------------------------------------------
-# HELPER: Compute Bounding Box Center and Dimensions
-# ------------------------------------------------------------------------------
-def get_bbox_center_world(obj):
-    local_bbox_center = 0.125 * sum((Vector(b) for b in obj.bound_box), Vector())
-    return obj.matrix_world @ local_bbox_center
+def enable_usd_addon():
+    """Force enable the USD IO addon."""
+    addon_name = "io_scene_usd"
+    loaded, _ = addon_utils.check(addon_name)
+    if not loaded:
+        print(f"Enabling addon: {addon_name}...")
+        addon_utils.enable(addon_name, default_set=True)
+    else:
+        print(f"Addon {addon_name} already enabled.")
 
-def get_orientation(obj):
-    # Scenic usually expects Euler angles or Quaternions. 
-    # Blender uses Euler XYZ by default. Converting to list.
-    return [obj.rotation_euler.x, obj.rotation_euler.y, obj.rotation_euler.z]
+def import_usd_safe(filepath):
+    """Try multiple import commands depending on Blender version."""
+    print(f"Attempting to import: {filepath}")
+    
+    # Method 1: Modern Blender (4.0+)
+    if hasattr(bpy.ops.wm, "usd_import"):
+        print("Using: bpy.ops.wm.usd_import")
+        bpy.ops.wm.usd_import(filepath=filepath)
+        return
 
-# ------------------------------------------------------------------------------
-# MAIN PIPELINE
-# ------------------------------------------------------------------------------
+    # Method 2: Older Blender (3.x)
+    if hasattr(bpy.ops.import_scene, "usd"):
+        print("Using: bpy.ops.import_scene.usd")
+        bpy.ops.import_scene.usd(filepath=filepath)
+        return
+
+    # Fail state
+    print("ERROR: No USD import operator found.")
+    print("Your Blender version is likely too old (< 3.0).")
+    print("Please download a newer version from https://builder.blender.org/download/")
+    sys.exit(1)
+
 def process_usd(usd_path, output_folder):
-    # 1. Clear existing scene
+    # Clear scene
     bpy.ops.wm.read_factory_settings(use_empty=True)
-
-    # 2. Import USD
-    # Note: 'scale' options might be needed depending on your USD units
-    print(f"Importing: {usd_path}...")
-    bpy.ops.wm.usd_import(filepath=usd_path)
-
-    # 3. Extract Metadata (Replicating 'get_mesh_info' from Isaac script)
-    transforms = {}
     
-    # Filter for mesh objects only
+    # Force Enable Addon
+    try:
+        enable_usd_addon()
+    except Exception as e:
+        print(f"Warning: Could not enable USD addon: {e}")
+
+    # Import
+    import_usd_safe(usd_path)
+
+    # Export Info (JSON)
     scene_objects = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
+    import json
+    from mathutils import Vector
     
-    print(f"Analyzing {len(scene_objects)} objects...")
-    
+    transforms = {}
     for i, obj in enumerate(scene_objects):
-        # Create a unique name (Isaac script used prim_0, prim_1...)
-        unique_name = f"prop_{i}_{obj.name}"
+        # Calculate center
+        local_bbox_center = 0.125 * sum((Vector(b) for b in obj.bound_box), Vector())
+        pos = obj.matrix_world @ local_bbox_center
+        rot = [obj.rotation_euler.x, obj.rotation_euler.y, obj.rotation_euler.z]
         
-        # Calculate world position (center of bbox)
-        pos = get_bbox_center_world(obj)
-        rot = get_orientation(obj)
-        
-        transforms[unique_name] = {
-            "full_path": obj.name,  # Blender doesn't have USD paths, using object name
+        # Use object name as key
+        transforms[obj.name] = {
+            "full_path": obj.name,
             "position": [pos.x, pos.y, pos.z],
             "orientation": rot,
-            "scale": [obj.scale.x, obj.scale.y, obj.scale.z] # Added scale (useful for Scenic)
+            "scale": [obj.scale.x, obj.scale.y, obj.scale.z]
         }
 
-    # 4. Save JSON Info
+    # Save JSON
     file_name = os.path.splitext(os.path.basename(usd_path))[0]
     json_path = os.path.join(output_folder, f"{file_name}_info.json")
-    
     with open(json_path, 'w') as f:
         json.dump(transforms, f, indent=2)
     print(f"Saved Metadata: {json_path}")
 
-    # 5. Export to OBJ (The Mesh for Scenic)
+    # Export OBJ
     obj_path = os.path.join(output_folder, f"{file_name}.obj")
-    
-    # We select everything to export the whole map as one mesh region
     bpy.ops.object.select_all(action='SELECT')
-    
     bpy.ops.export_scene.obj(
         filepath=obj_path,
         use_selection=True,
-        axis_forward='Y',  # CARLA/Unreal uses Y-forward mostly, adjust if needed
+        axis_forward='Y',
         axis_up='Z'
     )
     print(f"Saved Mesh: {obj_path}")
 
-# ------------------------------------------------------------------------------
-# ARGUMENT PARSING
-# ------------------------------------------------------------------------------
-# usage: blender --background --python usd_to_obj_blender.py -- <file.usd> <output_folder>
-if "--" in sys.argv:
-    args = sys.argv[sys.argv.index("--") + 1:]
-    if len(args) < 2:
-        print("Usage: blender -b -P script.py -- <input.usd> <output_dir>")
-    else:
-        input_usd = args[0]
-        output_dir = args[1]
-        
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+if __name__ == "__main__":
+    # blender --background --python script.py -- <input> <output>
+    if "--" in sys.argv:
+        args = sys.argv[sys.argv.index("--") + 1:]
+        if len(args) < 2:
+            print("Usage: blender -b -P script.py -- <input.usd> <output_dir>")
+            sys.exit(1)
             
-        process_usd(input_usd, output_dir)
-else:
-    print("No arguments found after '--'")
-# ```
-
-# #### How to run this:
-# You do not need to open Blender. Run this command in your terminal:
-# ```bash
-# blender --background --python usd_to_obj_blender.py -- /path/to/map.usd /path/to/output_folder
+        process_usd(args[0], args[1])
+    else:
+        print("No arguments found. Use '--' to separate arguments.")
