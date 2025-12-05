@@ -39,6 +39,6 @@ for name, mesh in city_mesh.geometry.items():
 
         break
 
-# chair = new Chair at (4,0,2)
+chair = new Chair at (4,0,2)
 
 ego = new Car left of chair by 5
