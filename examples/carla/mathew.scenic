@@ -1,6 +1,6 @@
 import trimesh 
 from scenic.core.regions import MeshVolumeRegion
-from scenic.core.shapes import MeshShape
+from scenic.core.shapes import MeshShape, BoxShape
 from scenic.core.object_types import Object
 from scenic.core.utils import repairMesh
 
@@ -24,7 +24,8 @@ for name, mesh in city_mesh.geometry.items():
 
         mesh = repairMesh(mesh)
         test = new Object at loc,
-                with shape MeshShape(mesh)
+                # with shape MeshShape(mesh)
+                with shape BoxShape(dimension=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
                 #  with length mesh.extents[0],
                 #  with width mesh.extents[1],
                 #  with height mesh.extents[2]
