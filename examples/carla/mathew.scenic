@@ -23,7 +23,7 @@ for name, mesh in city_mesh.geometry.items():
         print(mesh.extents)
         print(mesh.centroid)
         center = mesh.centroid
-        loc = center[0] @ center[1] @ center[2]
+        loc = center[0] @ center[1] # @ center[2]
 
         # test = MeshShape(mesh) 
         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
