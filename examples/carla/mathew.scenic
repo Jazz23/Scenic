@@ -23,3 +23,4 @@ for name, mesh in city_mesh.geometry.items():
         break
 
 ego = new Car
+other = new Car not visible
