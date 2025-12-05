@@ -8,9 +8,9 @@ param map = localPath('../../assets/maps/CARLA/Town01.xodr')
 model scenic.simulators.carla.model
 
 class GhostBuilding(Object):
-    width: 20
-    length: 20
-    height: 5
+    width: 1
+    length: 1
+    height: 1
     allowCollisions: True
 
 test = ""
