@@ -25,7 +25,7 @@ for name, mesh in city_mesh.geometry.items():
         mesh = repairMesh(mesh)
         test = new Object at loc,
                 # with shape MeshShape(mesh)
-                with shape BoxShape(dimension=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
+                with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
                 #  with length mesh.extents[0],
                 #  with width mesh.extents[1],
                 #  with height mesh.extents[2]
