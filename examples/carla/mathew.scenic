@@ -3,8 +3,10 @@ from scenic.core.regions import MeshVolumeRegion
 from scenic.core.shapes import MeshShape
 from scenic.core.object_types import Object
 
+param map = localPath('../../assets/maps/CARLA/Town01.xodr')
+model scenic.simulators.carla.model
 
-city_mesh = trimesh.load('../../assets/Town1.glb')
+city_mesh = trimesh.load(localPath('../../assets/Town1.glb'))
 for name, mesh in city_mesh.geometry.items():
     if "Bl_House_AmerSuburb009_N10" == name:
         print(name)
@@ -19,3 +21,5 @@ for name, mesh in city_mesh.geometry.items():
         globals()[name] = test 
 
         break
+
+ego = new Car
