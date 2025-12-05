@@ -1,7 +1,7 @@
 import trimesh 
 from scenic.core.regions import MeshVolumeRegion
 from scenic.core.shapes import MeshShape, BoxShape
-from scenic.core.object_types import Object
+from scenic.core.object_types import Object, Constructible
 from scenic.core.utils import repairMesh
 
 param map = localPath('../../assets/maps/CARLA/Town01.xodr')
@@ -23,7 +23,7 @@ for name, mesh in city_mesh.geometry.items():
         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
 
         mesh = repairMesh(mesh)
-        test = new Object at loc,
+        test = new Constructible at loc,
                 # with shape MeshShape(mesh)
                 with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
                 #  with length mesh.extents[0],
