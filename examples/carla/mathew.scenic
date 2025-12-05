@@ -28,4 +28,4 @@ for name, mesh in city_mesh.geometry.items():
 
         break
 
-ego = new Car left of test by 10 
+ego = new Car 
