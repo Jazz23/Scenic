@@ -13,7 +13,7 @@ for name, mesh in city_mesh.geometry.items():
         print(mesh.centroid)
         print(mesh.volume)
         center = mesh.centroid
-        loc = float(center[0]) @ float(center[1]) 
+        # loc = float(center[0]) @ float(center[1]) 
 
         # test = MeshShape(mesh) 
         test = Object._with(width=mesh.extents[0], length=mesh.extents[1]) 
