@@ -33,8 +33,8 @@ for name, mesh in city_mesh.geometry.items():
         # globals()[name] = test at loc
 
         break
-        
+
 chair = new Object at (4,0,2),
-	            with shape MeshShape.fromFile(localPath("meshes/chair.obj"),
+	            with shape MeshShape.fromFile(localPath("../../assets/meshes/chair.obj.bz2"),
 	                initial_rotation=(0,90 deg,0), dimensions=(1,1,1))
 ego = new Car 
