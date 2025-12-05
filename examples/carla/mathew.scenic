@@ -8,11 +8,15 @@ param map = localPath('../../assets/maps/CARLA/Town01.xodr')
 model scenic.simulators.carla.model
 
 class GhostBuilding(Object):
-    width: 1
-    length: 1
-    height: 1
-    allowCollisions: True
-
+    width: 20
+    length: 20
+    height: 10
+    
+    allowCollisions: True 
+    
+    blueprint: "static.prop.box" 
+    
+    physics: False
 test = ""
 
 city_mesh = trimesh.load(localPath('../../assets/Town1.glb'))
@@ -42,4 +46,4 @@ for name, mesh in city_mesh.geometry.items():
 
 chair = new Chair at (4,0,2)
 
-ego = new Car # left of chair by 5
+ego = new Car 
