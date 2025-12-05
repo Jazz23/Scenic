@@ -19,7 +19,7 @@ for name, mesh in city_mesh.geometry.items():
         loc = center[0] @ center[1] @ center[2]
 
         # test = MeshShape(mesh) 
-        test = Object._with(width=mesh.extents[0], length=mesh.extents[1], height=mesh.extents[2]) 
+        test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
         # globals()[name] = test at loc
 
         break
