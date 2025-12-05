@@ -10,7 +10,7 @@ model scenic.simulators.carla.model
 class GhostBuilding(Object):
     width: 20
     length: 20
-    # allowCollisions: True
+    allowCollisions: True
 
 test = ""
 
