@@ -22,7 +22,7 @@ for name, mesh in city_mesh.geometry.items():
         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
 
         test = new Object at loc,
-                with shape ConeShape()
+                with shape BoxShape()
                 #  with length mesh.extents[0],
                 #  with width mesh.extents[1],
                 #  with height mesh.extents[2]
