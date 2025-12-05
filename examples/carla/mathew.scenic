@@ -3,6 +3,7 @@ from scenic.core.regions import MeshVolumeRegion
 from scenic.core.shapes import MeshShape, BoxShape
 from scenic.core.object_types import Object, Constructible
 from scenic.core.utils import repairMesh
+import scenic.simulators.carla.blueprints as blueprints
 
 param map = localPath('../../assets/maps/CARLA/Town01.xodr')
 model scenic.simulators.carla.model
@@ -14,7 +15,7 @@ class GhostBuilding(Prop):
     
     allowCollisions: True 
     
-    blueprint: "static.prop.box" 
+    blueprint: blueprints.boxModels[0]
     
     physics: False
 test = ""
