@@ -6,6 +6,7 @@ from scenic.core.utils import repairMesh
 import scenic.simulators.carla.blueprints as blueprints
 
 param map = localPath('../../assets/maps/CARLA/Town01.xodr')
+param carla_map = 'Town01'
 model scenic.simulators.carla.model
 
 class GhostBuilding(Prop):
