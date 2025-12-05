@@ -47,4 +47,4 @@ for name, mesh in city_mesh.geometry.items():
 
 chair = new Chair at (4,0,2)
 
-ego = new Car 
+ego = new Car left of test by 5
