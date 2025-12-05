@@ -11,7 +11,7 @@ for name, mesh in city_mesh.geometry.items():
         print(mesh.volume)
         print(mesh.extents)
         print(mesh.centroid)
-        print(mesh.centerMesh)
+        # print(mesh.centerMesh)
         center = mesh.centroid
         # loc = float(center[0]) @ float(center[1]) 
 
