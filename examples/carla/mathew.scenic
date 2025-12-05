@@ -20,7 +20,7 @@ for name, mesh in city_mesh.geometry.items():
 
         # test = MeshShape(mesh) 
         test = Object._with(width=mesh.extents[0], length=mesh.extents[1], height=mesh.extents[2]) 
-        # globals()[name] = test 
+        # globals()[name] = test at loc
 
         break
 
