@@ -6,6 +6,8 @@ from scenic.core.object_types import Object
 param map = localPath('../../assets/maps/CARLA/Town01.xodr')
 model scenic.simulators.carla.model
 
+test = ""
+
 city_mesh = trimesh.load(localPath('../../assets/Town1.glb'))
 for name, mesh in city_mesh.geometry.items():
     if "Bl_House_AmerSuburb009_N10" == name:
@@ -22,5 +24,4 @@ for name, mesh in city_mesh.geometry.items():
 
         break
 
-ego = new Car
-other = new Car not visible
+ego = new Car left of test
