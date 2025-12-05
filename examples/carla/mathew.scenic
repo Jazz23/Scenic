@@ -23,9 +23,9 @@ for name, mesh in city_mesh.geometry.items():
         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
 
         mesh = repairMesh(mesh)
-        test = new Constructible at loc,
+        test = new Object at loc
                 # with shape MeshShape(mesh)
-                with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
+                # with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
                 #  with length mesh.extents[0],
                 #  with width mesh.extents[1],
                 #  with height mesh.extents[2]
