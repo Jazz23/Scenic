@@ -1,5 +1,5 @@
 import trimesh 
-from scenic.core.regions import MeshVolumeRegion
+from scenic.core.regions import MeshVolumeRegion, MeshSurfaceRegion
 from scenic.core.shapes import MeshShape
 from scenic.core.object_types import Object
 
@@ -18,6 +18,8 @@ for name, mesh in city_mesh.geometry.items():
         # test = MeshShape(mesh) 
         test = Object._with(width=mesh.extents[0], length=mesh.extents[1]) 
         globals()[name] = test 
+
+        tmp = MeshSurfaceRegion(mesh)
 
         break
 
