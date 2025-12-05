@@ -538,6 +538,9 @@ class Simulation(abc.ABC):
         """
         self.agents = []
         for obj in self.scene.objects:
+            if obj.blueprint is None:
+                continue
+            
             self._createObject(obj)
 
     def initializeReplay(self, replay, enableReplay, enableDivergenceCheck, allowPickle):
