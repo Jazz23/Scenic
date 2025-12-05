@@ -23,7 +23,7 @@ for name, mesh in city_mesh.geometry.items():
         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
 
         mesh = repairMesh(mesh)
-        test = new Object at loc
+        # test = new Object at loc
                 # with shape MeshShape(mesh)
                 # with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
                 #  with length mesh.extents[0],
@@ -33,5 +33,8 @@ for name, mesh in city_mesh.geometry.items():
         # globals()[name] = test at loc
 
         break
-
+        
+chair = new Object at (4,0,2),
+	            with shape MeshShape.fromFile(localPath("meshes/chair.obj"),
+	                initial_rotation=(0,90 deg,0), dimensions=(1,1,1))
 ego = new Car 
