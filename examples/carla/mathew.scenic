@@ -7,7 +7,7 @@ from scenic.core.utils import repairMesh
 param map = localPath('../../assets/maps/CARLA/Town01.xodr')
 model scenic.simulators.carla.model
 
-class GhostBuilding(Object):
+class GhostBuilding(Prop):
     width: 20
     length: 20
     height: 10
