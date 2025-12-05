@@ -12,10 +12,16 @@ model scenic.simulators.carla.model
 usd_data = parse_usd_file("G:\Desktop\Town01_Opt.usd")
 
 # Create objects for each mesh
+usd_objects = {}
 for data in usd_data:
     usd_obj = new Prop with shape BoxShape(dimensions=(data["width"], data["length"], data["height"])),
         at data["position"],  # Use extracted position
         facing data["orientation"],  # Use extracted orientation (yaw, pitch, roll)
         with allowCollisions True, with requireVisible False, with regionContainedIn workspace.region
+    usd_objects[data["name"]] = usd_obj
 
-ego = new Car
+print(usd_objects.keys())
+
+building = usd_objects["Bl_House_AmerSuburb009_N8"]
+
+ego = new Car left of building by 10
