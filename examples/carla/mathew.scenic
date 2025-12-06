@@ -21,31 +21,31 @@ class GhostBuilding(Prop):
     physics: False
 test = ""
 
-city_mesh = trimesh.load(localPath('../../assets/Town1.glb'))
-for name, mesh in city_mesh.geometry.items():
-    if "Bl_House_AmerSuburb009_N10" == name:
-        print(name)
-        print(mesh.volume)
-        print(mesh.extents)
-        print(mesh.centroid)
-        center = mesh.centroid
-        loc = center[0] @ center[1] # @ center[2]
+# city_mesh = trimesh.load(localPath('../../assets/Town1.glb'))
+# for name, mesh in city_mesh.geometry.items():
+#     if "Bl_House_AmerSuburb009_N10" == name:
+#         print(name)
+#         print(mesh.volume)
+#         print(mesh.extents)
+#         print(mesh.centroid)
+#         center = mesh.centroid
+#         loc = center[0] @ center[1] # @ center[2]
 
-        # test = MeshShape(mesh) 
-        # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
-        test = new GhostBuilding at loc
-        # mesh = repairMesh(mesh)
-        # test = new Object at loc
-                # with shape MeshShape(mesh)
-                # with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
-                #  with length mesh.extents[0],
-                #  with width mesh.extents[1],
-                #  with height mesh.extents[2]
+#         # test = MeshShape(mesh) 
+#         # test = Object._with(length=mesh.extents[0], width=mesh.extents[1], height=mesh.extents[2]) 
+#         test = new GhostBuilding at loc
+#         # mesh = repairMesh(mesh)
+#         # test = new Object at loc
+#                 # with shape MeshShape(mesh)
+#                 # with shape BoxShape(dimensions=(mesh.extents[1], mesh.extents[0], mesh.extents[2]))
+#                 #  with length mesh.extents[0],
+#                 #  with width mesh.extents[1],
+#                 #  with height mesh.extents[2]
 
-        # globals()[name] = test at loc
+#         # globals()[name] = test at loc
 
-        break
+#         break
 
-chair = new Chair at (4,0,2)
+chair = new Chair at (15,-6,2), with regionContainedIn workspace.region
 
-ego = new Car left of test by 1 
+ego = new Car # left of test by 1 
