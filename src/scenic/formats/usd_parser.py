@@ -68,7 +68,7 @@ def parse_usd_file(file_path):
                 yaw = math.atan2(siny_cosp, cosy_cosp)
                 
                 # Convert to Scenic-friendly format (degrees)
-                position = (translation[0], translation[2], translation[1])
+                position = ((translation[0]+6.3) / 100.5, (translation[2]-9.8) / -99, translation[1])
                 orientation = (math.degrees(yaw), math.degrees(pitch), math.degrees(roll))
 
                 geometry_info = {
