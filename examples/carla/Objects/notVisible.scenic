@@ -16,7 +16,7 @@ usd_data = parse_usd_file("G:\Desktop\Town01_Opt.usd")
 usd_objects = {}
 for data in usd_data:
     blueprint = None
-    if (data["name"].startswith("Prop_chair87")):  # Filter for specific building
+    if (data["name"].startswith("Prop_chair85")):  # Filter for specific building
         blueprint = blueprints.chairModels[0]
     else:
         continue  # Skip non-target meshes
@@ -30,7 +30,7 @@ for data in usd_data:
 
 print(usd_objects.keys())
 
-building = usd_objects["Prop_chair87"]
+building = usd_objects["Prop_chair85"]
 
 # chair = new Chair left of building by 10, with regionContainedIn workspace.region
 

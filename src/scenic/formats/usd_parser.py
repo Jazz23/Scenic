@@ -68,8 +68,8 @@ def parse_usd_file(file_path):
                 yaw = math.atan2(siny_cosp, cosy_cosp)
                 
                 # Convert to Scenic-friendly format (degrees)
-                position = ((translation[0]+6.3) / 100.5, (translation[2]-9.8) / -99, translation[1])
-                orientation = (rotation.angle + math.pi, 0, 0)#-rotation.angle)
+                position = ((translation[0]+6.4340926549) / 100.0034018362, (translation[2]+7.8286226668) / -100.0454723616, translation[1])
+                orientation = (rotation.angle + math.pi - 0.2, 0, 0)#-rotation.angle)
 
                 geometry_info = {
                     "name": prim.GetName(),
