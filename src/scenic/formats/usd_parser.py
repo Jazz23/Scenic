@@ -69,7 +69,7 @@ def parse_usd_file(file_path):
                 
                 # Convert to Scenic-friendly format (degrees)
                 position = ((translation[0]+6.3) / 100.5, (translation[2]-9.8) / -99, translation[1])
-                orientation = (rotation.angle + 180, 0, 0)#-rotation.angle)
+                orientation = (rotation.angle + math.pi, 0, 0)#-rotation.angle)
 
                 geometry_info = {
                     "name": prim.GetName(),
