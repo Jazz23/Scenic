@@ -25,8 +25,8 @@ for data in usd_data:
 categories = categorize_usd_geometries(usd_objects)
 
 manhole = Uniform(*categories["manholes"])
-nearby = CircularRegion(manhole, 20)
+nearby = CircularRegion(manhole.position, 20)
 
 ego = new Car on road.intersect(nearby)
-require ego can see manhole
-new Pedestrian beyond manhole by 1  # put pedestrian behind manhole
+# require ego can see manhole
+# new Pedestrian beyond manhole by 1  # put pedestrian behind manhole
