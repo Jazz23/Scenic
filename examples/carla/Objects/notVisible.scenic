@@ -15,23 +15,13 @@ usd_data = parse_usd_file("G:\Desktop\Town01_Opt.usd")
 # Create objects for each mesh
 usd_objects = {}
 for data in usd_data:
-    blueprint = None
-    if (data["name"].startswith("Prop_chair85")):  # Filter for specific building
-        blueprint = blueprints.chairModels[0]
-    else:
-        continue  # Skip non-target meshes
-        
     usd_obj = new Prop with shape BoxShape(dimensions=(data["width"], data["length"], data["height"])),
         at data["position"],  # Use extracted position
         facing data["orientation"],  # Use extracted orientation (yaw, pitch, roll)
-        with allowCollisions True, with requireVisible False, with regionContainedIn workspace.region, with blueprint blueprint
+        with allowCollisions True, with requireVisible False, with regionContainedIn workspace.region, with occluding True
 
     usd_objects[data["name"]] = usd_obj
 
-print(usd_objects.keys())
+ego = new Car at (132.9721, -198.746811, 2.572), facing (90, 0, 0)
 
-building = usd_objects["Prop_chair85"]
-
-# chair = new Chair left of building by 10, with regionContainedIn workspace.region
-
-ego = new Car
+chair = new Chair not visible from ego, at (92.1711, -227.1949, 2), with regionContainedIn workspace.region
