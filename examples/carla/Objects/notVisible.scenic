@@ -2,7 +2,7 @@
 To run this file using the Carla simulator:
     scenic examples/carla/car.scenic --2d --model scenic.simulators.carla.model --simulate
 '''
-from scenic.formats.usd_parser import parse_usd_file
+from scenic.formats.usd_parser import parse_usd_file, categorize_usd_geometries
 from scenic.core.regions import AllRegion
 import scenic.simulators.carla.blueprints as blueprints
 
@@ -22,6 +22,11 @@ for data in usd_data:
 
     usd_objects[data["name"]] = usd_obj
 
-ego = new Car at (132.9721, -198.746811, 2.572), facing (90, 0, 0)
+categories = categorize_usd_geometries(usd_objects)
 
-chair = new Chair not visible from ego, at (92.1711, -227.1949, 2), with regionContainedIn workspace.region
+manhole = Uniform(*categories["manholes"])
+nearby = CircularRegion(manhole, 20)
+
+ego = new Car on road.intersect(nearby)
+require ego can see manhole
+new Pedestrian beyond manhole by 1  # put pedestrian behind manhole

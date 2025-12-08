@@ -2,6 +2,8 @@ from pxr import Usd, UsdGeom, Gf
 import trimesh
 import math  # For degrees conversion
 from scenic.core.utils import repairMesh
+import re
+from collections import defaultdict
 
 def parse_usd_file(file_path):
     stage = Usd.Stage.Open(file_path)
@@ -73,8 +75,46 @@ def parse_usd_file(file_path):
                 "orientation": orientation,  # (yaw, pitch, roll) in degrees
                 "width": width / x_scalar,
                 "length": length / -y_scalar,
-                "height": height
+                "height": height / 100
             }
             geometry_data.append(geometry_info)
 
     return geometry_data
+
+def categorize_usd_geometries(geometry_data):
+    rules = {
+        "lights":        r"(Light|lamp|Lamp|Streetlight)",
+        "houses":        r"Bl_House|SuburbHouse|Suburbhouse",
+        "benches":       r"benchV|prop_bench",
+        "chairs":        r"chair",
+        "tables":        r"table",
+        "fences":        r"Fence",
+        "roads":         r"Road_",
+        "crosswalks":    r"Crosswalk",
+        "sidewalks":     r"SideWalk|Sidewalk",
+        "trash":         r"trash|Trash|garbage",
+        "manholes":      r"Manhole",
+        "plants":        r"Plant|plant|Pine|Bush|Tree|Leaf",
+        "vehicles":      r"Vh_Car",
+        "air_conditioners": r"airConditioner",
+        "billboards":    r"BillBoard",
+        "walls":         r"Wall",
+        "buildings":     r"CityBuilding|Apartment|BuildingWall",
+        "props_misc":    r"Prop_|prop_",
+        "instanced":     r"InstancedStaticMesh",
+    }
+
+    categories = defaultdict(list)
+
+    for key, value in geometry_data.items():
+        obj = key
+        matched = False
+        for cat, pattern in rules.items():
+            if re.search(pattern, obj):
+                categories[cat].append(value)
+                matched = True
+                break
+        if not matched:
+            categories["uncategorized"].append(value)
+    
+    return categories
